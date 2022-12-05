@@ -1,3 +1,4 @@
+import { async } from "@firebase/util";
 import { useState } from "react";
 
 const defaultFormFields = {
@@ -13,6 +14,15 @@ const SignUpForm = () => {
     const {displayName, email, password, confirmPassword} = formFields;
 
     console.log(formFields);
+
+    const handleSubmit = () => async (event) {
+        event.preventDefault();
+
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+    }
     
     const handleChange = (event) => {
         const {name, value} = event.target;
