@@ -28,7 +28,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 
 const googleProvider = new GoogleAuthProvider();
 googleProvider.setCustomParameters({
-prompt: "select_account"
+prompt: "select_account",
 });
 
 export const auth = getAuth();
@@ -38,6 +38,8 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, googlePro
 export const db = getFirestore();
 
 export const createUserDocumentFromAuth = async (userAuth) => {
+    if (!userAuth) return;
+
     const userDocRef = doc(db, 'users', userAuth.uid);
     console.log(userDocRef);
 
@@ -61,7 +63,7 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     return userDocRef;
 };
 
-export const createAuthUserWithEmailAndPassword = async () => {
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
     if (!email || !password) return;
 
     return await createUserWithEmailAndPassword(auth, email, password);
